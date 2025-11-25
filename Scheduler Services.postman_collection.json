@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "cd398feb-cf4b-47b2-a1ab-1945d8ea3a62",
+		"name": "Scheduler Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48230151",
+		"_collection_link": "https://mulearn1-8741876.postman.co/workspace/Scheduler~08d438d4-79f9-465f-9142-258cfbc42221/collection/48230151-cd398feb-cf4b-47b2-a1ab-1945d8ea3a62?action=share&source=collection_link&creator=48230151"
+	},
+	"item": [
+		{
+			"name": "schedule one-off",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"oneoff\",\n  \"target\": {\n    \"url\": \"https://api.partner.com/ingest\",\n    \"method\": \"POST\"\n  },\n  \"headers\": {\n    \"Content-Type\": \"application/json\",\n    \"X-Correlation-Id\": \"abc-123\"\n  },\n  \"params\": {},\n  \"payload\": {\n    \"order_id\": \"ORD-98765\",\n    \"items\": [\n      { \"sku\": \"SKU1\", \"qty\": 2 }\n    ]\n  },\n  \"scheduling\": {\n    \"timezone\": \"Asia/Kolkata\",\n    \"execute_at\": \"2025-11-25T16:26:00\"\n  },\n  \"retries\": {\n    \"enabled\": true,\n    \"max_attempts\": 5,\n    \"retryable_statuses\": [429, 500, 502, 503, 504],\n    \"on_failure\": \"dead_letter\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/jobs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recurring schedule",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"type\": \"recurring\", \"target\": { \"url\": \"http://localhost:8000/sentiment/api/v1/classify\", \"method\": \"POST\" }, \"headers\": { \"Content-Type\": \"application/json\", \"Cookie\": \"refreshToken=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..IutB6Nf7W3WFe7au.ObVAO9J9msC6SApuu5hWfAQUyafbSIaWiWsj4j3qcgofn9J3L4_wVRbSK-ZEiv9JUI7g0nlNlg._VR56ynyGZWp3I25g268WQ\" }, \"params\": {}, \"payload\": { \"comments\": [ \"I absolutely love this product! It works perfectly.\", \"I'm really disappointed, it broke after one use.\", \"It's okay, nothing special but not bad either.\" ] }, \"scheduling\": { \"cron\": \"*/1 * * * *\", \"timezone\": \"Asia/Kolkata\", \"start_time\": \"2025-11-25T19:02:00+05:30\", \"max_occurrences\": 10, \"end_time\": \"2025-11-25T19:03:00\" }, \"retries\": { \"enabled\": true, \"max_attempts\": 3 } }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/jobs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all jobs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/jobs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a job",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/jobs/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"jobs",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
